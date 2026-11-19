@@ -1,23 +1,27 @@
-from django.shortcuts import render
 from django.http import HttpResponse
-
-# Create your views here.
+from django.shortcuts import render, get_object_or_404
+from .models import Student
 
 def home(request):
-    return HttpResponse("Bienvenue a ABD")
-
-def student_list(request):
-    return HttpResponse("Liste des etudiants ")
-
-def student_detail(request, id):
-    return HttpResponse(f"Detail de l'etudiant {id}")
+    context = {
+        'school_name': "Ecole d'Excellence de Dakar",
+        'description': "Bienvenue sur notre plateforme"
+    }
+    return render(request, 'students/home.html', context)
 
 def about(request):
-    return HttpResponse("A propos de l'ecole ABD - Projet Django 2026")
+    return render(request, 'students/about.html')
+
+def student_list(request):
+    students = Student.objects.all()
+    return render(request, 'students/student_list.html', {'students': students})
+
+def student_detail(request, id):
+    student = get_object_or_404(Student, id=id)
+    return render(request, 'students/student_detail.html', {'student': student})
 
 def teacher_list(request):
-    return HttpResponse("Liste des enseignants")
+    return HttpResponse("<h1>Liste des profs - a venir</h1>")
 
 def course_list(request):
-    return HttpResponse("Liste des cours")
-
+    return HttpResponse("<h1>Liste des cours - a venir</h1>")
