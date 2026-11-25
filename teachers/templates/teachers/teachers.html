@@ -1,0 +1,7 @@
+<h1>Nos enseignants</h1>
+<p>Liste des enseignants.</p>
+{% for teacher in teachers %}
+  <p>{{ teacher.first_name }} {{ teacher.last_name }} - {{ teacher.subject }}</p>
+{% empty %}
+  <p>Aucun enseignant pour le moment.</p>
+{% endfor %}
