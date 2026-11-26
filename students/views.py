@@ -1,5 +1,7 @@
+from django.contrib import messages
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404, redirect, render
+from .forms import StudentForm
 from .models import Student
 
 def home(request):
@@ -25,3 +27,34 @@ def teacher_list(request):
 
 def course_list(request):
     return HttpResponse("<h1>Liste des cours - a venir</h1>")
+
+
+def student_create(request):
+    if request.method == "POST":
+        form = StudentForm(request.POST)
+        if form.is_valid():
+            student = form.save()
+            messages.success(request, f"{student} a été inscrit(e).")
+            return redirect(f"/students/{student.id}/")
+    else:
+        form = StudentForm()
+    context = {"form": form, "title": "Inscrire un étudiant"}
+    return render(request, "students/student_form.html", context)
+
+def student_update(request, id):
+    student = get_object_or_404(Student, id=id)
+    if request.method == 'POST':
+        form = StudentForm(request.POST, instance=student)
+        if form.is_valid():
+            form.save()
+            return redirect('student_detail', id=student.id)
+    else:
+        form = StudentForm(instance=student)
+    return render(request, 'students/student_form.html', {'form': form, 'student': student})
+
+def student_delete(request, id):
+    student = get_object_or_404(Student, id=id)
+    if request.method == 'POST':
+        student.delete()
+        return redirect('student_list')
+    return render(request, 'students/student_confirm_delete.html', {'student': student})
