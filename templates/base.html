@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>School Manager</title>
+</head>
+<body>
+    <nav>
+        <a href="/">Accueil</a> |
+        <a href="/students/">Étudiants</a> |
+        <a href="/teachers/">Enseignants</a> |
+        <a href="/courses/">Cours</a>
+    </nav>
+    <hr>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+
+</body>
+</html>

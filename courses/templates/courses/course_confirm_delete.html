@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Supprimer ce cours ?</h2>
+<p>Voulez-vous vraiment supprimer <strong>{{ course.title }}</strong> ?</p>
+<form method="post">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-danger">Oui, supprimer</button>
+  <a href="{% url 'course_detail' course.pk %}" class="btn btn-secondary">Non, annuler</a>
+</form>
+{% endblock %}

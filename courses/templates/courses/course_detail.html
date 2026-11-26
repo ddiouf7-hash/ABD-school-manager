@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{{ course.title }}</h2>
+<p>{{ course.description }}</p>
+<p><strong>Enseignant :</strong> {{ course.teacher }}</p>
+<a href="{% url 'course_update' course.pk %}" class="btn btn-warning">Modifier</a>
+<a href="{% url 'course_delete' course.pk %}" class="btn btn-danger">Supprimer</a>
+<a href="{% url 'course_list' %}" class="btn btn-secondary">Retour</a>
+{% endblock %}

@@ -1,8 +1,15 @@
-<h1>Nos cours</h1>
-<p>Liste des cours.</p>
-
-{% for course in courses %}
-    <p>{{ course.title }} - {{ course.teacher }}</p>
-{% empty %}
-    <p>Aucun cours pour le moment.</p>
-{% endfor %}
+{% extends 'base.html' %}
+{% block content %}
+<h2>Liste des cours</h2>
+<a href="{% url 'course_create' %}">+ Créer un cours</a>
+<hr>
+<ul>
+  {% for course in courses %}
+    <li>
+      <a href="{% url 'course_detail' course.pk %}">{{ course.title }} - {{ course.teacher }}</a>
+    </li>
+  {% empty %}
+    <li>Aucun cours pour le moment.</li>
+  {% endfor %}
+</ul>
+{% endblock %}
